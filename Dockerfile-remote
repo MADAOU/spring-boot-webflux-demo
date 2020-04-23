@@ -1,0 +1,8 @@
+FROM springboot
+
+RUN ulimit -n 5000
+
+EXPOSE 8090
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} webflux-demo-remote.jar
+ENTRYPOINT ["java","-jar","webflux-demo-remote.jar","--server.port=8090", "--server.tomcat.max-threads=5000"]

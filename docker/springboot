@@ -1,0 +1,6 @@
+FROM amazoncorretto:11
+RUN yum update -y && \
+	yum install -y procps
+RUN useradd -ms /bin/bash springboot
+USER springboot
+WORKDIR /home/springboot

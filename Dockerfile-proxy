@@ -1,0 +1,21 @@
+FROM springboot
+
+RUN ulimit -n 5000
+
+EXPOSE 8080
+EXPOSE 9090
+
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} webflux-demo-proxy.jar
+
+ENV JAVA_OPTS="\
+-server \
+-Dcom.sun.management.jmxremote=true \
+-Dcom.sun.management.jmxremote.ssl=false \
+-Dcom.sun.management.jmxremote.authenticate=false \
+-Dcom.sun.management.jmxremote.port=9090 \
+-Dcom.sun.management.jmxremote.rmi.port=9090 \
+-Dcom.sun.management.jmxremote.local.only=false \
+-Djava.rmi.server.hostname=192.168.100.102"
+
+ENTRYPOINT java ${JAVA_OPTS} -jar webflux-demo-proxy.jar --server.port=8080 --server.tomcat.max-threads=5000 --services.user.remote.url=http://webflux-demo-remote:8090/slow --services.user.remote.enable=1
