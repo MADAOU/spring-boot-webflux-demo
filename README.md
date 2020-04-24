@@ -50,18 +50,18 @@
         ```
         docker run --name=webflux-demo-remote --network=tokyobs -d -p 8090:8090 webflux-demo-remote
         ```
-    - 运行webflux-demo-remote
+    - 运行webflux-demo-proxy
         ```
         docker run --name=webflux-demo-proxy --network=tokyobs -d -p 8080:8080 -p 9090:9090 webflux-demo-proxy
         ```
         >9090 是JMX访问用的端口
 
 ## 如果直接使用Gradle启动SpringBoot的话
-1. 启动webflux-demo-proxy
+1. 启动webflux-demo-remote
     ```
     gradlew bootRun -Pargs="--server.port=8090"
      ```
-2. 启动webflux-demo-remote
+2. 启动webflux-demo-proxy
     ```
     gradlew bootRun -Pargs="--server.port=8080,--services.user.remote.enable=1"
     ```
